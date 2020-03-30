@@ -4,6 +4,7 @@ const connection = require('../../src/database/connection');
 
 describe('ONG',() => {
     beforeEach(async() => {
+      
       await  connection.migrate.latest();
     });
 
@@ -21,8 +22,16 @@ describe('ONG',() => {
 	        city: "Francisco beltrão",
 	        uf: "PR"
         });
-     
-       expect(response.body).toHaveProperty('id');
-       expect(response.doby.id).toHaveLength(8);
+        expect(response.body).toHaveProperty('id');
+        expect(response.body.id).toHaveLength(8)
+       
+    });
+
+    it('should be able to return an LIST OF ONGS', async () => {
+        const response = await request(app).get('/ongs')
+    
+        expect(Array.isArray(response.body)).toBe(true)
+    
+        
     });
 });
